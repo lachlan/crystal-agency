@@ -21,7 +21,7 @@ module Agency
       end
     end
 
-    struct RetryPolicy
+    class RetryPolicy
       def initialize(@retry_limit : UInt64? = nil, @retry_wait : Range(Time::Span, Time::Span) = (0.seconds..0.seconds), @retry_factor : Float64 = 1_f64)
         @retry_count = 0_u64
       end

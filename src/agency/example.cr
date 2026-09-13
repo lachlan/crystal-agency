@@ -70,7 +70,8 @@ end
 
 supervisor = ExampleSupervisor.new
 
-supervisor.repeat(name: "example repeating task", interval: 2.seconds) do
+supervisor.repeat(name: "example repeating task", interval: 2.seconds, retry_policy: Agency::Agent::RetryPolicy.infinite(wait: 1.second..10.seconds, factor: 2.0)) do
+  raise "crash" if Random.rand(1..2) == 1
   Log.info { "inside example repeating task" }
 end
 

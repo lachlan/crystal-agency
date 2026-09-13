@@ -24,7 +24,13 @@ module Agency
 
     private def run : Nil
       while started?
-        @block.call
+        begin
+          @block.call
+        rescue ex
+          raise ex
+        else
+          @retry_policy.reset # if task succeeds then restart retry count
+        end
         sleep(@interval)
       end
     end
